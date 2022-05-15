@@ -7,7 +7,8 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*Pass the CategoryId when creating a new CategoryItem*@
+    <a asp-action="Create" asp-route-categoryId = "@ViewBag.CategoryId">Create New</a>
 </p>
 <table class="table">
     <thead>

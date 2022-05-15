@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MeowLearn.Data;
 using MeowLearn.Entities;
+using MeowLearn.Extensions;
 
 namespace MeowLearn.Areas.Admin.Controllers
 {
@@ -20,9 +21,15 @@ namespace MeowLearn.Areas.Admin.Controllers
             _context = context;
         }
 
-        // GET: Admin/CategoryItem
-        public async Task<IActionResult> Index(int categoryId)
+        // GET: Admin/CategoryItem?CategoryId=1
+        public async Task<IActionResult> Index(int? categoryId)
         {
+            if (categoryId == null)
+            {
+                return View(await _context.CategoryItem.ToListAsync());
+            }
+
+            // Get the CategoryItems with the provided CategoryId
             List<CategoryItem> list = await (
                 from catItem in _context.CategoryItem
                 where catItem.CategoryId == categoryId
@@ -33,9 +40,12 @@ namespace MeowLearn.Areas.Admin.Controllers
                     Description = catItem.Description,
                     ReleaseDate = catItem.ReleaseDate,
                     MediaTypeId = catItem.MediaTypeId,
-                    CategoryId = categoryId
+                    CategoryId = (int)categoryId
                 }
             ).ToListAsync();
+
+            // Allow access to CategoryId within the relevant view
+            ViewBag.CategoryId = categoryId;
 
             return View(list);
         }
@@ -58,9 +68,17 @@ namespace MeowLearn.Areas.Admin.Controllers
         }
 
         // GET: Admin/CategoryItem/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int categoryId)
         {
-            return View();
+            // Provide associated CategoryId and available MediaTypes
+            // to be included in the Create CategoryItem view
+            List<MediaType> mediaTypes = await _context.MediaType.ToListAsync();
+            CategoryItem categoryItem = new CategoryItem
+            {
+                CategoryId = categoryId,
+                MediaTypes = mediaTypes.ConvertToSelectList(0),
+            };
+            return View(categoryItem);
         }
 
         // POST: Admin/CategoryItem/Create
@@ -77,7 +95,10 @@ namespace MeowLearn.Areas.Admin.Controllers
             {
                 _context.Add(categoryItem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(
+                    nameof(Index),
+                    new { categoryId = categoryItem.CategoryId } // Redirect back to CategoryItem?CategoryId=categoryId
+                );
             }
             return View(categoryItem);
         }
