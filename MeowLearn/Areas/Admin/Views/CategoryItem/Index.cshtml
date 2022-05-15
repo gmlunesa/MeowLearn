@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeowLearn.Entities.Category>
+﻿@model IEnumerable<MeowLearn.Entities.CategoryItem>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThumbnailImagePath)
+                @Html.DisplayNameFor(model => model.ReleaseDate)
             </th>
             <th></th>
         </tr>
@@ -34,13 +34,12 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ThumbnailImagePath)
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a asp-controller="CategoryItem" asp-action="Index" asp-route-CategoryId="@item.Id">Update Items</a>
             </td>
         </tr>
 }
