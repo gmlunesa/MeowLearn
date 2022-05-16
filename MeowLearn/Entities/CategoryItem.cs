@@ -20,5 +20,8 @@ namespace MeowLearn.Entities
         [NotMapped]
         public virtual ICollection<SelectListItem> MediaTypes { get; set; }
         public DateTime ReleaseDate { get; set; }
+
+        [NotMapped]
+        public int ContentId { get; set; }
     }
 }

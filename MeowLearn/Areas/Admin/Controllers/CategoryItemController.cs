@@ -32,6 +32,10 @@ namespace MeowLearn.Areas.Admin.Controllers
             // Get the CategoryItems with the provided CategoryId
             List<CategoryItem> list = await (
                 from catItem in _context.CategoryItem
+                join contentItem in _context.Content
+                    on catItem.Id equals contentItem.CategoryItem.Id
+                    into contentGroup
+                from subContent in contentGroup.DefaultIfEmpty()
                 where catItem.CategoryId == categoryId
                 select new CategoryItem
                 {
@@ -40,7 +44,8 @@ namespace MeowLearn.Areas.Admin.Controllers
                     Description = catItem.Description,
                     ReleaseDate = catItem.ReleaseDate,
                     MediaTypeId = catItem.MediaTypeId,
-                    CategoryId = (int)categoryId
+                    CategoryId = (int)categoryId,
+                    ContentId = (subContent != null) ? subContent.Id : 0
                 }
             ).ToListAsync();
 
