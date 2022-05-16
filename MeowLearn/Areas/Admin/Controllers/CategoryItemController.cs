@@ -110,12 +110,17 @@ namespace MeowLearn.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            List<MediaType> mediaTypes = await _context.MediaType.ToListAsync();
 
             var categoryItem = await _context.CategoryItem.FindAsync(id);
             if (categoryItem == null)
             {
                 return NotFound();
             }
+
+            // Set available MediaTypes in SelectListItem form
+            categoryItem.MediaTypes = mediaTypes.ConvertToSelectList(categoryItem.MediaTypeId);
+
             return View(categoryItem);
         }
 
@@ -153,7 +158,10 @@ namespace MeowLearn.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(
+                    nameof(Index),
+                    new { categoryId = categoryItem.CategoryId } // Redirect back to CategoryItem?CategoryId=categoryId
+                );
             }
             return View(categoryItem);
         }
@@ -183,7 +191,10 @@ namespace MeowLearn.Areas.Admin.Controllers
             var categoryItem = await _context.CategoryItem.FindAsync(id);
             _context.CategoryItem.Remove(categoryItem);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(
+                nameof(Index),
+                new { categoryId = categoryItem.CategoryId } // Redirect back to CategoryItem?CategoryId=categoryId
+            );
         }
 
         private bool CategoryItemExists(int id)
