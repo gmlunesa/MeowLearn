@@ -29,7 +29,7 @@
             <div class="form-group">
                 <label asp-for="MediaTypeId" class="control-label"></label>
                 <select asp-for="MediaTypeId" class="form-control" asp-items="@Model.MediaTypes"> @*Access MediaTypes options from the passed MediaTypes Collection*@
-                    <option value="">Please select a media type.</option>
+                    <option value="" disabled>Please select a media type.</option>
                 </select>
                 <span asp-validation-for="MediaTypeId" class="text-danger"></span>
             </div>

@@ -11,6 +11,8 @@ namespace MeowLearn.Entities
         [StringLength(200, MinimumLength = 10)]
         public string Title { get; set; }
         public string Description { get; set; }
+
+        [Display(Name = "Video Link (Optional)")]
         public string VideoLink { get; set; }
         public CategoryItem CategoryItem { get; set; }
 
