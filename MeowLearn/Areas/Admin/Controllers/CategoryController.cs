@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MeowLearn.Data;
 using MeowLearn.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MeowLearn.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -34,8 +36,7 @@ namespace MeowLearn.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -55,7 +56,9 @@ namespace MeowLearn.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ThumbnailImagePath")] Category category)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Name,Description,ThumbnailImagePath")] Category category
+        )
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +90,10 @@ namespace MeowLearn.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ThumbnailImagePath")] Category category)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("Id,Name,Description,ThumbnailImagePath")] Category category
+        )
         {
             if (id != category.Id)
             {
@@ -125,8 +131,7 @@ namespace MeowLearn.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();

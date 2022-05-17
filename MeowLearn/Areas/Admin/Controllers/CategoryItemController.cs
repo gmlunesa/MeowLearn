@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using MeowLearn.Data;
 using MeowLearn.Entities;
 using MeowLearn.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MeowLearn.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryItemController : Controller
     {
         private readonly ApplicationDbContext _context;
