@@ -8,6 +8,7 @@ namespace MeowLearn.Entities
 {
     public class CategoryItem
     {
+        private DateTime _defaultReleaseDate = DateTime.MinValue;
         public int Id { get; set; }
 
         [Required]
@@ -19,7 +20,18 @@ namespace MeowLearn.Entities
 
         [NotMapped]
         public virtual ICollection<SelectListItem> MediaTypes { get; set; }
-        public DateTime ReleaseDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ReleaseDate
+        {
+            get
+            {
+                return (_defaultReleaseDate == DateTime.MinValue)
+                  ? DateTime.Now
+                  : _defaultReleaseDate;
+            }
+            set { _defaultReleaseDate = value; }
+        }
 
         [NotMapped]
         public int ContentId { get; set; }
