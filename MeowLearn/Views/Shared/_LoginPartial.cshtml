@@ -18,10 +18,10 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register" data-toggle="modal" data-target="#UserRegistrationModal">Register</a> @* Added reference to registration modal*@
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" data-toggle="modal" data-target="#UserLoginModal">Login</a> @* Added reference to modal*@
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" data-toggle="modal" data-target="#UserLoginModal">Login</a> @* Added reference to login modal*@
     </li>
 }
 </ul>

@@ -69,5 +69,42 @@ namespace MeowLearn.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegistrationModel registrationModel)
+        {
+            registrationModel.RegistrationInvalid = "true";
+
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = registrationModel.Email,
+                    Email = registrationModel.Email,
+                    PhoneNumber = registrationModel.PhoneNumber,
+                    FirstName = registrationModel.FirstName,
+                    LastName = registrationModel.LastName,
+                    Address = registrationModel.Address,
+                    ZipCode = registrationModel.ZipCode,
+                };
+
+                var result = await _userManager.CreateAsync(user, registrationModel.Password);
+
+                if (result.Succeeded)
+                {
+                    registrationModel.RegistrationInvalid = "";
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Registration attempt failed.");
+                }
+            }
+
+            return PartialView("_UserRegistrationPartial", registrationModel);
+        }
     }
 }

@@ -7,9 +7,14 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@*Added modal with partial class*@
+@*Login modal with partial class*@
 <div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="UserLoginModalLabel" aria-hidden="true">
     <partial name="_UserLoginPartial" />
+</div>
+
+@*Registration modal with partial class*@
+<div class="modal fade" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <partial name="_UserRegistrationPartial" />
 </div>
 
 @section Scripts {
