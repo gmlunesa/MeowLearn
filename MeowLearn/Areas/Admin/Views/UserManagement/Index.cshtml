@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MeowLearn.Entities.Category>
+@using MeowLearn.Areas.Admin.Models
+@using MeowLearn.Extensions
+
+<form id="UserCategoryManagement" asp-action="Index">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <h4>Category</h4>
+                <select id="CategoryId" name="CategoryId" class="form-control" asp-items="Model.ConvertToSelectList(0)">
+                    <option value="0">Please choose a category.</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="alert_usermgmt">
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-10">
+            <h4>Users</h4>
+            <div class="form-group">
+                <div id="UsersCheckList">
+                    <partial name="_UserListPartial" model="new UserCategoryListModel {CategoryId=0,Users=null,UsersSelected=null } "/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group text-right">
+                <button type="button" id="SaveSelectedUsers" name="SaveSelectedUsers" class="btn btn-outline-info">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{ 
+    <script src="~/js/UserManagement.js"></script>
+    <script src="~/js/BootstrapAlerts.js"></script>
+}
