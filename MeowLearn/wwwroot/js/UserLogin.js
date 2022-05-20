@@ -1,15 +1,15 @@
 ﻿$(function () {
-    var userLoginButton = $("#UserLoginModal button[name='login']").click(onUserLoginClick);
+    let userLoginButton = $("#UserLoginModal button[name='login']").click(onUserLoginClick);
 
     function onUserLoginClick() {
-        var url = "UserAuth/Login";
-        var antiForgeryToken = $("#UserLoginModal input[name='__RequestVerificationToken'").val();
+        let url = "UserAuth/Login";
+        let antiForgeryToken = $("#UserLoginModal input[name='__RequestVerificationToken'").val();
 
-        var email = $("#UserLoginModal input[name='Email'").val();
-        var password = $("#UserLoginModal input[name='Password'").val();
-        var rememberMe = $("#UserLoginModal input[name='RememberMe'").prop('checked');
+        let email = $("#UserLoginModal input[name='Email'").val();
+        let password = $("#UserLoginModal input[name='Password'").val();
+        let rememberMe = $("#UserLoginModal input[name='RememberMe'").prop('checked');
 
-        var userInput = {
+        let userInput = {
             __RequestVerificationToken: antiForgeryToken,
             Email: email,
             Password: password,
@@ -22,16 +22,16 @@
             data: userInput,
             success: (data) => {
                 // Parse response received from UserAuthController.Login
-                var parsed = $.parseHTML(data);
+                let parsed = $.parseHTML(data);
 
-                var hasErrors = $(parsed).find("input[name='LoginInvalid']").val() === "true";
+                let hasErrors = $(parsed).find("input[name='LoginInvalid']").val() === "true";
 
                 if (hasErrors == true) {
                     $("#UserLoginModal").html(data);
 
                     userLoginButton = $("#UserLoginModal button[name='login'").click(onUserLoginClick);
 
-                    var form = $("#UserLoginForm");
+                    let form = $("#UserLoginForm");
 
                     $(form).removeData("validator");
                     $(form).removeData("unobtrusiveValidation");

@@ -1,11 +1,23 @@
-﻿@{
+﻿@using MeowLearn.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if(SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome to MeowLearn!</h1>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Please log in to access MeowLearn.</h1>
+    </div>
+}
 
 @*Login modal with partial class*@
 <div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="UserLoginModalLabel" aria-hidden="true">
@@ -13,12 +25,13 @@
 </div>
 
 @*Registration modal with partial class*@
-<div class="modal fade" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" name="UserRegistrationModal" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="UserRegistrationModal" aria-hidden="true">
     <partial name="_UserRegistrationPartial" />
 </div>
 
 @section Scripts {
     @*Custom JQuery and Ajax*@
     <script src="~/js/UserLogin.js"></script>
+    <script src="~/js/UserRegistration.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

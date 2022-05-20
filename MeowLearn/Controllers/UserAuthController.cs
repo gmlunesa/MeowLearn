@@ -3,6 +3,7 @@ using MeowLearn.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace MeowLearn.Controllers
@@ -73,7 +74,7 @@ namespace MeowLearn.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegistrationModel registrationModel)
+        public async Task<IActionResult> RegisterUser(RegistrationModel registrationModel)
         {
             registrationModel.RegistrationInvalid = "true";
 
