@@ -41,7 +41,11 @@
                     location.href = "Home/Index";
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: (xhr, ajaxOptions, thrownError) => {
+                let errorBody = `Oops! Received a ${xhr.status} error — ${xhr.statusText}`;
+
+                ShowDismissibleAlert("alert_login", "danger", errorBody);
+
                 console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

@@ -3,6 +3,7 @@ using MeowLearn.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -99,13 +100,24 @@ namespace MeowLearn.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Registration attempt failed.");
-                }
+                AddErrorsToModelState(result);
             }
 
             return PartialView("_UserRegistrationPartial", registrationModel);
+        }
+
+        [AllowAnonymous]
+        public async Task<bool> EmailExists(string email)
+        {
+            return await _context.Users.AnyAsync(e => e.Email.ToUpper() == email.ToUpper());
+        }
+
+        private void AddErrorsToModelState(IdentityResult identityResult)
+        {
+            foreach (var error in identityResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
     }
 }

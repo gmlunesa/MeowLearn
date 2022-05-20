@@ -49,7 +49,6 @@ namespace MeowLearn.Models
         )]
         public string PhoneNumber { get; set; }
 
-        [Required]
         public bool AcceptUserAgreement { get; set; }
 
         public string RegistrationInvalid { get; set; }

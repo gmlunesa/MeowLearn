@@ -30,8 +30,8 @@ else
 </div>
 
 @section Scripts {
-    @*Custom JQuery and Ajax*@
-    <script src="~/js/UserLogin.js"></script>
-    <script src="~/js/UserRegistration.js"></script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_AuthScriptsPartial");
+    }
 }
