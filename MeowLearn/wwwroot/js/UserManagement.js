@@ -1,4 +1,5 @@
-﻿document.getElementById("SaveSelectedUsers").disabled = true;
+﻿
+disableButton("SaveSelectedUsers", true);
 document.getElementById("UsersCheckList").innerHTML = "";
 
 const selectElement = document.querySelector('#CategoryId');
@@ -15,7 +16,7 @@ selectElement.addEventListener('change', async (event) => {
             let data = await getRequest(url);
 
             document.getElementById("UsersCheckList").innerHTML = await data;
-            document.getElementById("SaveSelectedUsers").disabled = false;
+            disableButton("SaveSelectedUsers", false);
 
         } catch (error) {
             ShowDismissibleAlert("alert_usermgmt", "danger", "Oops, we encountered an error!");
@@ -24,15 +25,14 @@ selectElement.addEventListener('change', async (event) => {
     }
     else {
         document.getElementById("UsersCheckList").innerHTML = "";
-        document.getElementById("SaveSelectedUsers").disabled = true;
-        $("input[type=checkbox]").prop("checked", false);
-        $("input[type=checkbox]").prop("disabled", true);
+        disableControls("SaveSelectedUsers", true);
     }
 
 
 });
 
 let saveButtonElement = document.getElementById('SaveSelectedUsers');
+
 saveButtonElement.addEventListener('click', async (event) => {
     let url = "/Admin/UserManagement/SaveSelectedUsers";
     let categoryId = document.getElementById("CategoryId").value;
@@ -48,6 +48,11 @@ saveButtonElement.addEventListener('click', async (event) => {
         UsersSelected: usersSelected
     }
 
+    ShowDismissibleAlert("alert_usermgmt", "primary", "Saving...");
+
+    // Disable Save button
+    disableControls("SaveSelectedUsers", true);
+
     try {
 
         $.ajax({
@@ -58,12 +63,14 @@ saveButtonElement.addEventListener('click', async (event) => {
                 document.getElementById("UsersCheckList").innerHTML = data;
 
                 ShowDismissibleAlert("alert_usermgmt", "success", "Saved successfully.");
-
+                disableButton("SaveSelectedUsers", false);
+                disableCheckboxes(false);
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 let errorBody = `Oops! Received a ${xhr.status} error — ${xhr.statusText}`;
 
                 ShowDismissibleAlert("alert_usermgmt", "danger", errorBody);
+                disableControls("SaveSelectedUsers", false);
 
                 console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
@@ -72,6 +79,7 @@ saveButtonElement.addEventListener('click', async (event) => {
 
     } catch (error) {
         ShowDismissibleAlert("alert_usermgmt", "danger", "Oops, we encountered an error!");
+        disableControls("SaveSelectedUsers", false);
     }
 
 });
@@ -95,6 +103,5 @@ const postRequest = async (url, requestBody) => {
     let data = await response.text();
 
     return data;
-
-
 }
+
