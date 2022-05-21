@@ -1,6 +1,7 @@
-﻿@using MeowLearn.Data
-@using Microsoft.AspNetCore.Identity
+﻿@using MeowLearn.Data;
+@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager;
+@model CategoryDetailsModel;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -8,8 +9,61 @@
 
 @if(SignInManager.IsSignedIn(User))
 {
+
     <div class="text-center">
         <h1 class="display-4">Welcome to MeowLearn!</h1>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h2>Your Courses</h2>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            @if(Model.CategoryItemsGroupByCategoryModels != null)
+            {
+                @foreach(var category in Model.CategoryItemsGroupByCategoryModels)
+                {
+                    <div class="card mt-2">
+                        <h4 class="card-header text-secondary bg-white"
+                            data-toggle="collapse" 
+                            data-target="#collapse_@category.Id" 
+                            aria-expanded="false"
+                            aria-controls="collapse_@category.Id"
+                        >
+                            @category.Name
+                        </h4>
+                        <div class="collapse"
+                            id="collapse_@category.Id"
+                            aria-expanded="false"
+                            aria-controls="collapse_@category.Id"
+                        >
+                            @foreach(var item in category.Items)
+                            {
+                                  <div class="card flex-row flex-wrap my-4 mx-2 border-0">
+                                    <div class="card-header">
+                                        <img src="@item.MediaImagePath" alt="Media Type">
+                                    </div>
+                                    <div class="card-block px-2 py-2">
+                                        <h5 class="card-title">                                        
+                                            <a  class="text-dark" 
+                                                asp-controller="Content" 
+                                                asp-action="Index" 
+                                                asp-route-CategoryItemId="@item.CategoryItemId"
+                                            >
+                                            @item.CategoryItemName
+                                            </a>
+                                        </h5>
+                                        <p class="card-text text-secondary">@item.CategoryItemDescription</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
     </div>
 }
 else
@@ -21,12 +75,30 @@ else
 
 @*Login modal with partial class*@
 <div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="UserLoginModalLabel" aria-hidden="true">
-    <partial name="_UserLoginPartial" />
+    <partial name="_UserLoginPartial" model="new LoginModel
+        {
+            Email = String.Empty,
+            Password = String.Empty,
+            RememberMe = false
+        }"
+    />
 </div>
 
 @*Registration modal with partial class*@
 <div class="modal fade" name="UserRegistrationModal" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="UserRegistrationModal" aria-hidden="true">
-    <partial name="_UserRegistrationPartial" />
+    <partial name="_UserRegistrationPartial" model="new RegistrationModel
+        {
+            Email = String.Empty,
+            Password = String.Empty,
+            ConfirmPassword = String.Empty,
+            FirstName = String.Empty,
+            LastName = String.Empty,
+            PhoneNumber = String.Empty,
+            Address = String.Empty,
+            ZipCode = String.Empty,
+            AcceptUserAgreement = false
+        }"
+    />
 </div>
 
 @section Scripts {
