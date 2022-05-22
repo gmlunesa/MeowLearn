@@ -69,3 +69,18 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.video-container {
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9*/
+    position: relative;
+}
+
+.video-container iframe {
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
