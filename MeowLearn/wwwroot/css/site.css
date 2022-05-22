@@ -84,3 +84,19 @@ body {
     top: 0;
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .hero-heading {
+        margin-top: 2rem;
+    }
+}
+
+.hero-register-button {
+    font-weight: bold;
+    color:var(--warning);
+    border: 2px solid var(--warning) !important;
+}
+
+.hero-register-button:hover {
+    color: white;
+}

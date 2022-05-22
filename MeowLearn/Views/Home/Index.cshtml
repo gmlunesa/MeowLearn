@@ -1,27 +1,25 @@
 ﻿@using MeowLearn.Data;
 @using Microsoft.AspNetCore.Identity;
-@inject SignInManager<ApplicationUser> SignInManager;
 @model CategoryDetailsModel;
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@if(SignInManager.IsSignedIn(User))
+@if(Model.CategoryItemsGroupByCategoryModels != null)
 {
-
-    <div class="text-center">
-        <h1 class="display-4">Welcome to MeowLearn!</h1>
-    </div>
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <h2>Your Courses</h2>
+    @if(Model.CategoryItemsGroupByCategoryModels.Count() > 0)
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome to MeowLearn!</h1>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            @if(Model.CategoryItemsGroupByCategoryModels != null)
-            {
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Your Courses</h2>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
                 @foreach(var category in Model.CategoryItemsGroupByCategoryModels)
                 {
                     <div class="card mt-2">
@@ -40,7 +38,7 @@
                         >
                             @foreach(var item in category.Items)
                             {
-                                  <div class="card flex-row flex-wrap my-4 mx-2 border-0">
+                                    <div class="card flex-row flex-wrap my-4 mx-2 border-0">
                                     <div class="card-header">
                                         <img src="@item.MediaImagePath" alt="Media Type">
                                     </div>
@@ -61,16 +59,20 @@
                         </div>
                     </div>
                 }
-            }
-
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-2">
+            Oops! You are not enrolled in any courses yet.
+        </div>
+    }
+
 }
 else
 {
-    <div class="text-center">
-        <h1 class="display-4">Please log in to access MeowLearn.</h1>
-    </div>
+    <partial name="_DefaultHomePagePartial" model="@Model.Categories" />
 }
 
 @*Login modal with partial class*@
