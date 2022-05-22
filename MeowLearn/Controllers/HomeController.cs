@@ -1,4 +1,5 @@
 ﻿using MeowLearn.Data;
+using MeowLearn.Entities;
 using MeowLearn.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,12 @@ namespace MeowLearn.Controllers
                         categoryItemsGroupByCategoryModels;
                 }
             }
+            else
+            {
+                var categories = await GetCategoriesWithContent();
+
+                categoryDetailsModel.Categories = categories;
+            }
 
             return View(categoryDetailsModel);
         }
@@ -73,6 +80,25 @@ namespace MeowLearn.Controllers
                     RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
                 }
             );
+        }
+
+        private async Task<List<Category>> GetCategoriesWithContent()
+        {
+            var categories = await (
+                from category in _context.Category
+                join categoryItem in _context.CategoryItem
+                    on category.Id equals categoryItem.CategoryId
+                join content in _context.Content on categoryItem.Id equals content.CategoryItem.Id
+                select new Category
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    Description = category.Description,
+                    ThumbnailImagePath = category.ThumbnailImagePath
+                }
+            ).Distinct().ToListAsync();
+
+            return categories;
         }
 
         private async Task<IEnumerable<CategoryItemDetailsModel>> GetCategoryItemDetailsForUser(
