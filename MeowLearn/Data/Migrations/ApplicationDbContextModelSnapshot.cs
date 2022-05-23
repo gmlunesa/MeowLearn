@@ -210,13 +210,13 @@ namespace MeowLearn.Data.Migrations
                         {
                             Id = 1,
                             Name = "Lecture",
-                            ThumbnailImagePath = "/images/LectureImage.jpeg"
+                            ThumbnailImagePath = "/images/LectureImage.png"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Video",
-                            ThumbnailImagePath = "/images/VideoImage.jpeg"
+                            ThumbnailImagePath = "/images/VideoImage.png"
                         });
                 });
 

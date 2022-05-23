@@ -9,25 +9,21 @@ namespace MeowLearn.Data.Migrations
             migrationBuilder.InsertData(
                 table: "MediaType",
                 columns: new[] { "Id", "Name", "ThumbnailImagePath" },
-                values: new object[] { 1, "Lecture", "/images/LectureImage.jpeg" });
+                values: new object[] { 1, "Lecture", "/images/LectureImage.png" }
+            );
 
             migrationBuilder.InsertData(
                 table: "MediaType",
                 columns: new[] { "Id", "Name", "ThumbnailImagePath" },
-                values: new object[] { 2, "Video", "/images/VideoImage.jpeg" });
+                values: new object[] { 2, "Video", "/images/VideoImage.png" }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "MediaType",
-                keyColumn: "Id",
-                keyValue: 1);
+            migrationBuilder.DeleteData(table: "MediaType", keyColumn: "Id", keyValue: 1);
 
-            migrationBuilder.DeleteData(
-                table: "MediaType",
-                keyColumn: "Id",
-                keyValue: 2);
+            migrationBuilder.DeleteData(table: "MediaType", keyColumn: "Id", keyValue: 2);
         }
     }
 }
