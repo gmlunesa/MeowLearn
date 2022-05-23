@@ -2,7 +2,7 @@
 
 @*Hero Section*@
 <div class="container hero col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5 my-5">
         <div class="col-10 col-sm-8 col-lg-7">
             <img src="~/Images/HeroImage.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" loading="lazy" width="700" height="500">
         </div>
@@ -10,20 +10,28 @@
             <h1 class="display-5 fw-bold lh-1 mb-3 ">Your pace, your time</h1>
             <p class="lead">With <strong>MeowLearn</strong>, you can study according to your needs.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button id="HeroRegisterButton" class="btn btn-outline-warning hero-register-button btn-lg px-4 me-md-2">Register</button>
+                <button id="HeroRegisterButton" 
+                        class="btn btn-outline-warning hero-register-button btn-lg px-4 me-md-2"
+                         asp-area="Identity" 
+                         asp-page="/Account/Register" 
+                         data-toggle="modal" 
+                         data-target="#UserRegistrationModal"
+                >
+                    Register
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-<div class="container">
+<hr class="section-divider" />
+<div class="container" id="courses">
     <h3 class="border-bottom mb-4 pb-2" >Courses</h3>
     <div class="row">
         @{
             foreach(var category in Model.Take(6))
             {
                 <div class="col-lg-4 col-md-12 mb-4 d-flex align-items-stretch ">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 course">
                         <img src="@category.ThumbnailImagePath" class="card-img-top" alt="Card Category">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@category.Name</h5>
@@ -33,4 +41,14 @@
                 </div>
             }
         }
+</div>
+
+<div class="jumbotron jumbotron-fluid mt-4 px-3">
+    <div class="container">
+        <h1 class="display-4">Powered by ASP.NET</h1>
+        <p class="lead">This concept project is built with ASP.NET, Entity Framework and SQL Server.</p>
+        <hr class="my-4">
+        <p>Created by gmlunesa, this full stack application is fully functional with considerable features.</p>
+        <a class="btn btn-warning btn-lg" href="https://github.com/gmlunesa/MeowLearn" role="button">Learn More</a>
+    </div>
 </div>

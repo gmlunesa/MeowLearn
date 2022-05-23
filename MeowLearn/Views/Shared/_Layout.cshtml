@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using MeowLearn.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,9 +14,12 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light mb-3 fixed-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MeowLearn</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/Images/Logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                    MeowLearn
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,9 +29,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if(!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#courses">Courses</a>
+                            </li> 
+                        }
                         <partial name="_AdminMenuPartial" />
                     </ul>
                     <partial name="_LoginPartial" />
@@ -42,6 +53,34 @@
             &copy; 2022 - MeowLearn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    @*Login modal with partial class*@
+    <div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="UserLoginModalLabel" aria-hidden="true">
+        <partial name="_UserLoginPartial" model="new LoginModel
+            {
+                Email = String.Empty,
+                Password = String.Empty,
+                RememberMe = false
+            }"
+        />
+    </div>
+
+    @*Registration modal with partial class*@
+    <div class="modal fade" name="UserRegistrationModal" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="UserRegistrationModal" aria-hidden="true">
+        <partial name="_UserRegistrationPartial" model="new RegistrationModel
+            {
+                Email = String.Empty,
+                Password = String.Empty,
+                ConfirmPassword = String.Empty,
+                FirstName = String.Empty,
+                LastName = String.Empty,
+                PhoneNumber = String.Empty,
+                Address = String.Empty,
+                ZipCode = String.Empty,
+                AcceptUserAgreement = false
+            }"
+        />
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

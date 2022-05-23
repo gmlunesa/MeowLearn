@@ -75,33 +75,7 @@ else
     <partial name="_DefaultHomePagePartial" model="@Model.Categories" />
 }
 
-@*Login modal with partial class*@
-<div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="UserLoginModalLabel" aria-hidden="true">
-    <partial name="_UserLoginPartial" model="new LoginModel
-        {
-            Email = String.Empty,
-            Password = String.Empty,
-            RememberMe = false
-        }"
-    />
-</div>
 
-@*Registration modal with partial class*@
-<div class="modal fade" name="UserRegistrationModal" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="UserRegistrationModal" aria-hidden="true">
-    <partial name="_UserRegistrationPartial" model="new RegistrationModel
-        {
-            Email = String.Empty,
-            Password = String.Empty,
-            ConfirmPassword = String.Empty,
-            FirstName = String.Empty,
-            LastName = String.Empty,
-            PhoneNumber = String.Empty,
-            Address = String.Empty,
-            ZipCode = String.Empty,
-            AcceptUserAgreement = false
-        }"
-    />
-</div>
 
 @section Scripts {
     @{
