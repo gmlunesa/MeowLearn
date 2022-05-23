@@ -73,7 +73,7 @@
                     <div class="col-sm-12">
                         <div class="form-check">
                             <input asp-for="AcceptUserAgreement" class="form-check-input" />
-                            <label asp-for="AcceptUserAgreement" class="form-check-label">I understand and agree to the <a href="#">Terms of Agreement</a> and <a href="#">Privacy Policy</a>.</label>
+                            <label asp-for="AcceptUserAgreement" class="form-check-label">I understand and agree to the <a asp-area="" asp-controller="Home" asp-action="Privacy">Terms of Agreement</a> and <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>.</label>
                         </div>
                     </div>
                 </div>

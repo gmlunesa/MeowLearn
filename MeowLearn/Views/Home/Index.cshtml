@@ -8,11 +8,11 @@
 
 @if(Model.CategoryItemsGroupByCategoryModels != null)
 {
+    <div class="text-center">
+        <h1>Welcome to MeowLearn!</h1>
+    </div>
     @if(Model.CategoryItemsGroupByCategoryModels.Count() > 0)
     {
-        <div class="text-center">
-            <h1 class="display-4">Welcome to MeowLearn!</h1>
-        </div>
         <div class="row mt-5">
             <div class="col-md-6">
                 <h2>Your Courses</h2>
@@ -23,7 +23,7 @@
                 @foreach(var category in Model.CategoryItemsGroupByCategoryModels)
                 {
                     <div class="card mt-2">
-                        <h4 class="card-header text-secondary bg-white"
+                        <h4 class="card-header card-main-title text-secondary bg-white"
                             data-toggle="collapse" 
                             data-target="#collapse_@category.Id" 
                             aria-expanded="false"
@@ -40,7 +40,7 @@
                             {
                                     <div class="card flex-row flex-wrap my-4 mx-2 border-0">
                                     <div class="card-header">
-                                        <img src="@item.MediaImagePath" alt="Media Type">
+                                        <img src="@item.MediaImagePath" class="card-img" alt="Media Type">
                                     </div>
                                     <div class="card-block px-2 py-2">
                                         <h5 class="card-title">                                        
@@ -64,9 +64,20 @@
     }
     else
     {
-        <div class="alert alert-warning mt-2">
-            Oops! You are not enrolled in any courses yet.
+        <div class="row justify-content-center mt-5">
+            <div class="alert alert-warning col-lg-10 col-md-8">
+                Oops! You are not enrolled in any courses yet.
+            </div>
+            <div class="col-lg-2 col-md-4 text-center" >
+                <a  class="btn btn-warning"
+                    asp-controller="AvailableCategories"
+                    asp-action="Index"
+                >
+                    Enroll
+                </a>
+            </div>
         </div>
+
     }
 
 }

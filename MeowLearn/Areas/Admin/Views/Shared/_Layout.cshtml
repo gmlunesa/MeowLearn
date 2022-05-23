@@ -41,7 +41,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - MeowLearn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year.ToString()                     
+            <img src="~/Images/Logo.svg" width="20" height="20" class="d-inline-block" alt="Logo">
+            MeowLearn - A concept project by <a href="https://gmlunesa.com" target="_blank" rel="noopener noreferrer">gmlunesa</a> | <a href="https://github.com/gmlunesa/MeowLearn" target="_blank" rel="noopener noreferrer">Source</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

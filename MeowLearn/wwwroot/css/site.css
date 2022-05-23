@@ -1,11 +1,13 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap');
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-  font-weight: bold;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: bold;
 }
 
 
@@ -61,8 +63,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Inter', sans-serif;
 }
 .footer {
   position: absolute;
@@ -117,4 +120,12 @@ body {
 
 .function-button:hover {
     text-decoration: none;
+}
+
+.card-img {
+    max-width: 5rem;
+}
+
+.navbar-brand {
+    font-weight: 800;
 }

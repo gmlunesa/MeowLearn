@@ -1,5 +1,6 @@
 ﻿using MeowLearn.Areas.Admin.Models;
 using MeowLearn.Data;
+using MeowLearn.Data.Interfaces;
 using MeowLearn.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,12 @@ namespace MeowLearn.Areas.Admin.Controllers
     public class UserManagementController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDataFunctions _dataFunctions;
 
-        public UserManagementController(ApplicationDbContext context)
+        public UserManagementController(ApplicationDbContext context, IDataFunctions dataFunctions)
         {
             _context = context;
+            _dataFunctions = dataFunctions;
         }
 
         public async Task<IActionResult> Index()
@@ -57,28 +60,10 @@ namespace MeowLearn.Areas.Admin.Controllers
                 userCategoryListModel.CategoryId
             );
 
-            using (var dbContextTransaction = await _context.Database.BeginTransactionAsync())
-            {
-                try
-                {
-                    _context.RemoveRange(userCategoriesToDelete);
-
-                    await _context.SaveChangesAsync();
-
-                    if (userCategoriesToAdd != null)
-                    {
-                        _context.AddRange(userCategoriesToAdd);
-                        await _context.SaveChangesAsync();
-                    }
-
-                    await dbContextTransaction.CommitAsync();
-                }
-                catch (Exception ex)
-                {
-                    await dbContextTransaction.DisposeAsync();
-                }
-            }
-
+            await _dataFunctions.UpdateUserCategoryEntityAsync(
+                userCategoriesToDelete,
+                userCategoriesToAdd
+            );
             userCategoryListModel.Users = await GetAllUsersAsync();
 
             return PartialView("_UserListPartial", userCategoryListModel);

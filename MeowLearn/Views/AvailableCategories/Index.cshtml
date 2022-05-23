@@ -1,0 +1,53 @@
+﻿@model MeowLearn.Models.AvailableCategoriesModel
+@using MeowLearn.Extensions
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Available Categories</h1>
+<h4>Please choose your courses.</h4>
+
+<form asp-action="Index">
+    <div class="row mt-3">
+        <div class="col-md-10">
+            <table class="table table-bordered">
+                @if(Model != null)
+                {
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var category in @Model.Categories)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @if(Model.CategoriesSelected != null && Model.CategoriesSelected.Contains(category, new CompareCategories()))
+                                    {
+                                        <input type="checkbox" class="form-check-input" id="CategoriesSelected" name="CategoriesSelected" checked value="@category.Id">
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="form-check-input" id="CategoriesSelected" name="CategoriesSelected" value="@category.Id">
+                                    }
+                                </td>
+                                <td>
+                                    @category.Name
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 d-flex">
+            <input type="submit" value="Save" class="btn btn-outline-warning ml-auto" />
+        </div>
+    </div>
+</form>

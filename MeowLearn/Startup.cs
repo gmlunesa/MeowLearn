@@ -1,4 +1,5 @@
 using MeowLearn.Data;
+using MeowLearn.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,6 +41,8 @@ namespace MeowLearn
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddScoped<IDataFunctions, DataFunctions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
