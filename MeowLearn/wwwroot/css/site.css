@@ -115,3 +115,6 @@ body {
     background-color: var(--warning);
 }
 
+.function-button:hover {
+    text-decoration: none;
+}
