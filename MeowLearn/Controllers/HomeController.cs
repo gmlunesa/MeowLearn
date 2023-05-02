@@ -129,13 +129,14 @@ namespace MeowLearn.Controllers
             IEnumerable<CategoryItemDetailsModel> categoryItemDetails
         )
         {
+            Console.WriteLine();
             return (
                 from item in categoryItemDetails
                 group item by item.CategoryId into categoryGroup
                 select new CategoryItemsGroupByCategoryModel
                 {
                     Id = categoryGroup.Key,
-                    Name = categoryGroup.Select(c => c.CategoryItemName).FirstOrDefault(),
+                    Name = categoryGroup.Select(c => c.CategoryName).FirstOrDefault(),
                     Items = categoryGroup
                 }
             );
